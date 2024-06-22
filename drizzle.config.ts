@@ -9,10 +9,15 @@ if (!process.env.DATABASE_URL) {
 }
 
 export default {
-    schema: './src/lib/supabase/schema/ts',
+    schema: './src/lib/supabase/schema.ts',
     out: './migrations',
-    driver: 'pg',
     dbCredentials: {
-        connectconnectionString: process.env.DATABASE_URL || ''
-    }
-};
+        url: process.env.DATABASE_URL || '',
+        database: "postgres",
+        port: 5432,
+        host: "aws-0-us-east-1.pooler.supabase.com",
+        user: "postgres.wmqpzzijxzmqhdbldxez",
+        password: "98R7ZIzOyAYZpsEp"
+    },
+    dialect: 'postgresql',
+} as Config;
