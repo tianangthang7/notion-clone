@@ -3,7 +3,13 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import React from 'react'
 import Banner from '../../../public/appBanner.png'
-import { CLIENTS } from '@/lib/constants'
+import Calendar from '../../../public/cal.png'
+
+import { CLIENTS, USERS } from '@/lib/constants'
+import { twMerge } from 'tailwind-merge'
+import clsx from 'clsx'
+import CustomCard from '@/components/landing-page/custom-card'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 const HomePage = () => {
   return (
     <>
@@ -27,7 +33,7 @@ const HomePage = () => {
       </section>
       <section className='relative'>
         <div className="after:content[''] before:content[''] flex overflow-hidden before:absolute before:bottom-0 before:left-0 before:top-0 before:z-10 before:w-20 before:bg-gradient-to-r before:from-background before:to-transparent after:absolute after:bottom-0 after:right-0 after:top-0 after:z-10 after:w-20 after:bg-gradient-to-l after:from-background after:to-transparent before:dark:from-brand-dark after:dark:from-brand-dark">
-          {[...Array(2)].map((arr) => (
+          {[1, 2].map((arr) => (
             <div key={arr} className='animate-slide flex flex-nowrap'>
               {CLIENTS.map((client) => (
                 <div
@@ -45,6 +51,58 @@ const HomePage = () => {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className='relative flex flex-col items-center justify-center px-4 sm:px-6'>
+        <div className='top-22 absolute -z-10 h-32 w-[30%] rounded-full bg-brand-primaryPurple/50 blur-[120px]' />
+        <TitleSection
+          title='Kepp track of your meetings all in one place'
+          subheading='Capture your ideas, thoughts, and meeting notes'
+          pill='Fetures'
+        />
+        <div className='realtive mt-10 flex max-w-[450px] items-center justify-center rounded-2xl border-8 border-washed-purple-300 border-opacity-10 sm:ml-0'>
+          <Image alt='calendar' src={Calendar} className='rounderd-2xl' />
+        </div>
+      </section>
+
+      <section className='relative'>
+        <div className='mt-20 flex flex-col overflow-visible overflow-x-hidden px-4 sm:px-6'></div>
+
+        <TitleSection
+          title='Trusted by all'
+          subheading='Join thousand of satisfied users'
+          pill='Testimonials'
+        />
+        {[...Array(2)].map((arr, index) => (
+          <div
+            className={twMerge(
+              clsx('mt-10 flex flex-nowrap gap-6 self-start', {
+                'flex-row-reverse': index === 1,
+                'animate-[slide_250s_linear_infinite]': true,
+                'animate-[slide_250s_linear_infinite_reverse]': index === 1,
+                'ml-[100vw]': index === 1,
+              }),
+              'hover:paused'
+            )}
+          >
+            {USERS.map((testimonial, index) => (
+              <CustomCard
+                key={testimonial.name}
+                className='shrink-0s w-[500px] rounded-xl dark:bg-gradient-to-t dark:from-border dark:to-background'
+                cardHeader={
+                  <div className='items-canter flex gap-4'>
+                    <Avatar>
+                      <AvatarImage
+                        src={`/avatars/${index + 1}.png`}
+                      ></AvatarImage>
+                      <AvatarFallback>AV</AvatarFallback>
+                    </Avatar>
+                  </div>
+                }
+              ></CustomCard>
+            ))}
+          </div>
+        ))}
       </section>
     </>
   )
